@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectShared
+namespace SharedProject
 {
-    class Message
+    [Serializable]
+    public class Message
     {
         private string _text;
 
@@ -17,7 +18,7 @@ namespace ProjectShared
             set
             {
                 if (value.Length > 280) throw new MessageLengthException(value.Length - 280);
-                else _text = value;
+                _text = value;
             }
         }
 
@@ -26,6 +27,12 @@ namespace ProjectShared
             Id = id;
             Text = text;
             CreatedTime = DateTime.UtcNow;
+        }
+
+        public override string ToString()
+        {
+            var localTime = DateTime.SpecifyKind(CreatedTime, DateTimeKind.Local);
+            return $"{localTime.TimeOfDay} :: {Text}";
         }
 
     }

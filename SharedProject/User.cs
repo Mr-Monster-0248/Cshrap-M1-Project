@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectShared
+namespace SharedProject
 {
     public class User
     {

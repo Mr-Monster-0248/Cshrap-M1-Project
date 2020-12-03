@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectShared.Exceptions
+namespace SharedProject.Exceptions
 {
     class MessageLengthException : Exception
     {
