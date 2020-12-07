@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace ProjectServer
 {
@@ -6,7 +7,13 @@ namespace ProjectServer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            Server server = new Server();
+            server.Start();
         }
     }
 }
