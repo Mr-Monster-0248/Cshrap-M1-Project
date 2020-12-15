@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjectServer.Services;
 using Serilog;
 
 namespace ProjectServer
@@ -11,6 +12,10 @@ namespace ProjectServer
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .CreateLogger();
+            
+            
+            DbServices.Init();
+            
 
             Server server = new Server();
             server.Start();
