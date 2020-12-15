@@ -11,11 +11,14 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Command.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\CommandString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\DirectMessageData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\ICommandData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\LoginData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\TopicMessageData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Communication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\BadRequestException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\MessageLengthException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Message.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ServerResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\Parser.cs" />
   </ItemGroup>

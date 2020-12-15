@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.WebSockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
 
 namespace SharedProject
 {
     public class Communication
     {
-        public static void SendMsg(Stream s, Message msg)
+        public static async void SendResponse(WebSocket webSocket, ServerResponse response)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(s, msg);
+            byte[] responseBytes = response.ToByte();
+            await webSocket.SendAsync(new ArraySegment<byte>(responseBytes, 0, responseBytes.Length),
+                WebSocketMessageType.Text, true, CancellationToken.None);
         }
-
-        public static Message ReceiveMsg(Stream s)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            return (Message)bf.Deserialize(s);
-        }
+        //
+        // public static string ReceiveMsg(Stream s)
+        // {
+        //     var reader = new StreamReader(s);
+        //     return reader.ReadLine();
+        // }
     }
 }
