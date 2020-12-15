@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Text.Json;
 using SharedProject.CommandUtils;
 using SharedProject.Exceptions;
@@ -7,18 +8,17 @@ namespace SharedProject
 {
     public class Command
     {
-        private CommandString _prefix;
-
         public string Prefix
         {
             get
             {
-                return _prefix switch
+                return Type switch
                 {
                     CommandString.Register => CommandString.Register.ToString().ToLower(),
                     CommandString.Join => CommandString.Join.ToString().ToLower(),
                     CommandString.Login => CommandString.Login.ToString().ToLower(),
                     CommandString.Send => CommandString.Send.ToString().ToLower(),
+                    CommandString.DirectMessage => CommandString.DirectMessage.ToString().ToLower(),
                     CommandString.List => CommandString.List.ToString().ToLower(),
                     CommandString.CreateTopic => CommandString.CreateTopic.ToString().ToLower(),
                     _ => "error",
@@ -29,17 +29,17 @@ namespace SharedProject
             {
                 try
                 {
-                    _prefix = Enum.Parse<CommandString>(value);
+                    Type = (CommandString) Enum.Parse(typeof(CommandString), value, true);
                 }
                 catch
                 {
                     Console.WriteLine("Wrong prefix command, assigning Error type to the command");
-                    _prefix = CommandString.Error;
+                    Type = CommandString.Error;
                 }
             }
         }
 
-        public CommandString Type => _prefix;
+        public CommandString Type { get; private set; }
 
         public string Data { get; private set; }
 
@@ -53,10 +53,24 @@ namespace SharedProject
             }
             catch (BadRequestException e)
             {
-                _prefix = CommandString.Error;
+                Type = CommandString.Error;
                 Data = $"{{\"message\": \"{e.Message}\"}}";
             }
+        }
+        
+        public T GetDeserializedData<T>() where T : ICommandData
+        {
+            return JsonSerializer.Deserialize<T>(Data);
+        }
 
+        public byte[] ToByte()
+        {
+            return Encoding.UTF8.GetBytes(ToString());
+        }
+
+        public override string ToString()
+        {
+            return $"{Prefix}:{Data}";
         }
     }
 }

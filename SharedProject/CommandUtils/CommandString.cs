@@ -11,6 +11,7 @@ namespace SharedProject.CommandUtils
         CreateTopic,
         Join,
         Send,
+        DirectMessage,
         Error
     }
 }
