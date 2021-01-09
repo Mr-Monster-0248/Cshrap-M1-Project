@@ -7,7 +7,7 @@ using SharedProject;
 
 namespace ProjectServer.Handlers
 {
-    public partial class WebSocketHandler    
+    internal partial class WebSocketHandler    
     {
         private void HandleLogin (LoginData data)
         {

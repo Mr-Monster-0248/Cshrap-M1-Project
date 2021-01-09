@@ -12,7 +12,7 @@ using SharedProject.CommandUtils;
 
 namespace ProjectServer.Handlers
 {
-    public partial class WebSocketHandler
+    internal partial class WebSocketHandler
     {
         private static readonly ConcurrentDictionary<User, WebSocket> _connectedClient = new ConcurrentDictionary<User, WebSocket>();
         private User _user;
@@ -37,24 +37,26 @@ namespace ProjectServer.Handlers
                     WebSocketReceiveResult receiveResult =
                         await _webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
 
-                    if (receiveResult.MessageType == WebSocketMessageType.Close)
+                    switch (receiveResult.MessageType)
                     {
-                        await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-                    }
-                    else if (receiveResult.MessageType == WebSocketMessageType.Binary)
-                    {
-                        await _webSocket.CloseAsync(WebSocketCloseStatus.InvalidMessageType, "Cannot accept binary frame",
-                            CancellationToken.None);
-                    }
-                    else
-                    {
-                        var message = Encoding.Default.GetString(receiveBuffer).Replace("\0", String.Empty); // receiveBuffer.ToString();
+                        case WebSocketMessageType.Close:
+                            await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                            break;
+                        case WebSocketMessageType.Binary:
+                            await _webSocket.CloseAsync(WebSocketCloseStatus.InvalidMessageType, "Cannot accept binary frame",
+                                CancellationToken.None);
+                            break;
+                        default:
+                        {
+                            var message = Encoding.Default.GetString(receiveBuffer).Replace("\0", String.Empty); // receiveBuffer.ToString();
 
-                        Command command = new Command(message);
+                            Command command = new Command(message);
 
-                        Log.Information($"Received {command.Type} request");
+                            Log.Information($"Received {command.Type} request");
 
-                        Dispatch(command);
+                            Dispatch(command);
+                            break;
+                        }
                     }
                 }
             }

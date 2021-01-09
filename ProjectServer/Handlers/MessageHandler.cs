@@ -3,7 +3,7 @@ using SharedProject.CommandUtils;
 
 namespace ProjectServer.Handlers
 {
-    public partial class WebSocketHandler
+    internal partial class WebSocketHandler
     {
         private void HandleDirectMessage(DirectMessageData data)
         {
