@@ -2,9 +2,9 @@
 using System.Reflection;
 using System.Text.Json;
 
-namespace SharedProject.CommandUtils
+namespace SharedProject.DTO
 {
-    public interface ICommandData
+    public interface ICommandDto
     {
         public virtual string ToJsonString()
         {

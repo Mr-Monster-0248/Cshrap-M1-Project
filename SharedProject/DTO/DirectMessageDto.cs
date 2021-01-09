@@ -1,6 +1,6 @@
-﻿namespace SharedProject.CommandUtils
+﻿namespace SharedProject.DTO
 {
-    public class DirectMessageData: ICommandData
+    public class DirectMessageDto: ICommandDto
     {
         public string Receiver { get; set; }
         public string Text { get; set; }

@@ -1,16 +1,16 @@
 ﻿using System;
-using SharedProject.CommandUtils;
+using SharedProject.DTO;
 
 namespace ProjectServer.Handlers
 {
     internal partial class WebSocketHandler
     {
-        private void HandleDirectMessage(DirectMessageData data)
+        private void HandleDirectMessage(DirectMessageDto dto)
         {
             throw new NotImplementedException();
         }
 
-        private void HandleTopicMessage(TopicMessageData data)
+        private void HandleTopicMessage(TopicMessageDto dto)
         {
             throw new NotImplementedException();
         }

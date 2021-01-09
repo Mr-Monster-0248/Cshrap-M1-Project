@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace SharedProject
 {
-    public class Communication
+    public static class Communication
     {
         public static async void SendResponse(WebSocket webSocket, ServerResponse response)
         {

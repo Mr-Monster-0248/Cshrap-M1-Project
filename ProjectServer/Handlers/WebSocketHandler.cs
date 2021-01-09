@@ -8,6 +8,7 @@ using ProjectServer.Models;
 using SharedProject.Utils;
 using SharedProject;
 using Serilog;
+using SharedProject.DTO;
 using SharedProject.CommandUtils;
 
 namespace ProjectServer.Handlers
@@ -77,19 +78,19 @@ namespace ProjectServer.Handlers
             switch (command.Type)
             {
                 case CommandString.Login:
-                    HandleLogin(command.GetDeserializedData<LoginData>());
+                    HandleLogin(command.GetDeserializedData<LoginDto>());
                     break;
 
                 case CommandString.Register:
-                    HandleRegister(command.GetDeserializedData<LoginData>());
+                    HandleRegister(command.GetDeserializedData<LoginDto>());
                     break;
 
                 case CommandString.DirectMessage:
-                    HandleDirectMessage(command.GetDeserializedData<DirectMessageData>());
+                    HandleDirectMessage(command.GetDeserializedData<DirectMessageDto>());
                     break;
 
                 case CommandString.Send:
-                    HandleTopicMessage(command.GetDeserializedData<TopicMessageData>());
+                    HandleTopicMessage(command.GetDeserializedData<TopicMessageDto>());
                     break;
 
                 case CommandString.List:

@@ -2,16 +2,16 @@
 using ProjectServer.Models;
 using ProjectServer.Services;
 using Serilog;
-using SharedProject.CommandUtils;
+using SharedProject.DTO;
 using SharedProject;
 
 namespace ProjectServer.Handlers
 {
     internal partial class WebSocketHandler    
     {
-        private void HandleLogin (LoginData data)
+        private void HandleLogin (LoginDto dto)
         {
-            var dbUser = AuthService.LogUserIn(data.Username, data.Password);
+            var dbUser = AuthService.LogUserIn(dto.Username, dto.Password);
 
             if (dbUser == null)
             {
@@ -31,12 +31,12 @@ namespace ProjectServer.Handlers
             Communication.SendResponse(_webSocket, _response);
         }
 
-        private void HandleRegister(LoginData data)
+        private void HandleRegister(LoginDto dto)
         {
             var newUser = new User
             {
-                Username = data.Username,
-                Password = AuthService.HashPassword(data.Password)
+                Username = dto.Username,
+                Password = AuthService.HashPassword(dto.Password)
             };
 
             try
@@ -54,5 +54,9 @@ namespace ProjectServer.Handlers
                 Communication.SendResponse(_webSocket, _response);
             }
         }
+
+        // TODO: Handle sending message to topic
+        
+        // TODO: Handle sending message to private contact
     }
 }

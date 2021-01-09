@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Text.Json;
+using SharedProject.DTO;
 using SharedProject.CommandUtils;
 using SharedProject.Exceptions;
 
@@ -58,7 +59,7 @@ namespace SharedProject
             }
         }
         
-        public T GetDeserializedData<T>() where T : ICommandData
+        public T GetDeserializedData<T>() where T : ICommandDto
         {
             return JsonSerializer.Deserialize<T>(Data);
         }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SharedProject.CommandUtils
+namespace SharedProject.DTO
 {
-    public class LoginData : ICommandData
+    public class LoginDto : ICommandDto
     {
         public string Username { get; set; }
         public string Password { get; set; }
