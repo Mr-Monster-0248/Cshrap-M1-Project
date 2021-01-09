@@ -1,6 +1,6 @@
 ﻿namespace SharedProject.DTO
 {
-    public class TopicMessageDto: ICommandDto
+    public class TopicMessageDto: CommandDto
     {
         
     }

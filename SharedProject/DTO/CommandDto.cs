@@ -4,9 +4,10 @@ using System.Text.Json;
 
 namespace SharedProject.DTO
 {
-    public interface ICommandDto
+    [Serializable]
+    public abstract class CommandDto
     {
-        public virtual string ToJsonString()
+        public string ToJsonString()
         {
             return JsonSerializer.Serialize(this);
         }
