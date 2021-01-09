@@ -40,8 +40,13 @@ namespace ProjectServer.Handlers
 
             try
             {
-                AuthService.RegisterUser(newUser);
-                Log.Information($"{_user.Username} registered");
+                var user = AuthService.RegisterUser(newUser);
+
+                // Logging in the user after registration
+                _user = user;
+                _connectedClient.TryAdd(_user, _webSocket);
+                
+                Log.Information($"{_user.Username} registered and logged in");
                 Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, ServerSimpleResponse.SuccessNoData());
             }
             catch

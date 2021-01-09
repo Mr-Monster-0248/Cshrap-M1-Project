@@ -20,16 +20,18 @@ namespace ProjectServer.Services
         public static User RegisterUser(User newUser)
         {
             var dbContext = DbServices.Instance.Context;
-
+            
+            //TODO: check if username is taken before adding it
+            
             try
             {
                 dbContext.Users.Add(newUser); // TODO: handle error
                 dbContext.SaveChanges();
-                return newUser;
+                return dbContext.Users.FirstOrDefault(user => user.Username == newUser.Username);
             }
             catch
             {
-                throw;
+                return null;
             }
 
         }
