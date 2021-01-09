@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -18,13 +19,11 @@ namespace ProjectServer.Handlers
         private static readonly ConcurrentDictionary<User, WebSocket> _connectedClient = new ConcurrentDictionary<User, WebSocket>();
         private User _user;
         private readonly WebSocket _webSocket;
-        private readonly ServerResponse _response;
 
         public WebSocketHandler(WebSocketContext webSocketContext)
         {
             _webSocket = webSocketContext.WebSocket;
             _user = null;
-            _response = new ServerResponse();
         }
 
         public async void Receive()
@@ -94,6 +93,7 @@ namespace ProjectServer.Handlers
                     break;
 
                 case CommandString.List:
+                    HandleListTopic();
                     break;
                 case CommandString.CreateTopic:
                     break;

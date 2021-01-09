@@ -12,11 +12,13 @@ namespace ProjectServer.Handlers
         private void HandleLogin (LoginDto dto)
         {
             var dbUser = AuthService.LogUserIn(dto.Username, dto.Password);
+            
+            
 
             if (dbUser == null)
             {
-                _response.Status = "error"; // TODO: change status here
-                _response.Data = "Wrong username or password";
+                var resp = new ServerSimpleResponse<InfoDto>("error", new InfoDto{ Message = "Wrong username or password" });
+                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, resp);
                 // TODO: send response here
                 return;
             }
@@ -27,8 +29,7 @@ namespace ProjectServer.Handlers
             // Add the user to the Dictionary
             _connectedClient.TryAdd(_user, _webSocket); //TODO: handle error
             Log.Information($"{_user.Username} logged in");
-            _response.SetSuccessNoData();
-            Communication.SendResponse(_webSocket, _response);
+            Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, ServerSimpleResponse.SuccessNoData());
         }
 
         private void HandleRegister(LoginDto dto)
@@ -43,20 +44,15 @@ namespace ProjectServer.Handlers
             {
                 AuthService.RegisterUser(newUser);
                 Log.Information($"{_user.Username} registered");
-                _response.SetSuccessNoData();
-                Communication.SendResponse(_webSocket, _response);
+                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, ServerSimpleResponse.SuccessNoData());
             }
             catch
-            {
-                _response.Status = "error"; // TODO: change status here
-                _response.Data = "Error while registering user";
+            {                
+                var resp = new ServerSimpleResponse<InfoDto>("error", new InfoDto{ Message = "Error while registering user" });
+
                 Log.Error("A registration failed");
-                Communication.SendResponse(_webSocket, _response);
+                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, resp);
             }
         }
-
-        // TODO: Handle sending message to topic
-        
-        // TODO: Handle sending message to private contact
     }
 }
