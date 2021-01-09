@@ -13,8 +13,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)CommandUtils\CommandString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Communication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DTO\DirectMessageDto.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DTO\ICommandDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DTO\CommandDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DTO\InfoDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DTO\LoginDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DTO\TopicDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DTO\TopicMessageDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\BadRequestException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\MessageLengthException.cs" />

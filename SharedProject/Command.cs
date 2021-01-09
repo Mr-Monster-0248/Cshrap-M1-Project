@@ -59,7 +59,7 @@ namespace SharedProject
             }
         }
         
-        public T GetDeserializedData<T>() where T : ICommandDto
+        public T GetDeserializedData<T>() where T : CommandDto
         {
             return JsonSerializer.Deserialize<T>(Data);
         }

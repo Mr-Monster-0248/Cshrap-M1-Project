@@ -6,12 +6,15 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using SharedProject.DTO;
 
 namespace SharedProject
 {
     public static class Communication
     {
-        public static async void SendResponse(WebSocket webSocket, ServerResponse response)
+        public static async void SendResponse<T, U>(WebSocket webSocket, T response) 
+            where T : ServerResponse<U> 
+            where U : CommandDto
         {
             byte[] responseBytes = response.ToByte();
             await webSocket.SendAsync(new ArraySegment<byte>(responseBytes, 0, responseBytes.Length),

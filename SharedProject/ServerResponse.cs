@@ -1,45 +1,82 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using SharedProject.DTO;
 
 namespace SharedProject
 {
     [Serializable]
-    public class ServerResponse
+    public abstract class ServerResponse<T> where T : CommandDto
     {
         public string Status { get; set; } // TODO: make it as an enum
-        public string Data { get; set; }
 
-        public ServerResponse()
+        public abstract byte[] ToByte();
+    }
+
+    [Serializable]
+    public class ServerSimpleResponse<T> : ServerResponse<T> where T : CommandDto
+    {
+        public T Data { get; set; }
+
+        public ServerSimpleResponse()
         {
-            Status = "success";
-            Data = "";
+            Status = null;
+            Data = null;
         }
 
-        public ServerResponse(string data)
+        public ServerSimpleResponse(T data)
         {
             Status = "success";
             Data = data;
         }
 
-        public ServerResponse(string status, string data)
+        public ServerSimpleResponse(string status, T data)
         {
             Status = status;
             Data = data;
         }
 
-        public void SetSuccessNoData()
+
+        public static ServerSimpleResponse<InfoDto> SuccessNoData()
+        {
+            return new ServerSimpleResponse<InfoDto>(new InfoDto {Message = ""});
+        }
+
+        public override byte[] ToByte()
+        {
+            return JsonSerializer.SerializeToUtf8Bytes(this);
+        }
+    }
+
+    public abstract class ServerSimpleResponse : ServerSimpleResponse<InfoDto>
+    {
+    }
+
+    [Serializable]
+    public class ServerListResponse<T> : ServerResponse<T> where T : CommandDto
+    {
+        public List<T> Data { get; set; }
+
+        public ServerListResponse()
+        {
+            Status = null;
+            Data = null;
+        }
+
+        public ServerListResponse(List<T> data)
         {
             Status = "success";
-            Data = "";
+            Data = data;
         }
 
-        public override string ToString()
+        public ServerListResponse(string status, List<T> data)
         {
-            return Status == "error" ? $"{{\"Error\": {Data}}}" : Data;
+            Status = status;
+            Data = data;
         }
-
-        public byte[] ToByte()
+        
+        public override byte[] ToByte()
         {
             return JsonSerializer.SerializeToUtf8Bytes(this);
         }
