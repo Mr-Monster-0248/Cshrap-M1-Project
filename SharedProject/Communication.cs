@@ -12,14 +12,38 @@ namespace SharedProject
 {
     public static class Communication
     {
-        public static async void SendResponse<T, U>(WebSocket webSocket, T response) 
-            where T : ServerResponse<U> 
+        private static async void SendByte(WebSocket webSocket, byte[] resp)
+        {
+            await webSocket.SendAsync(new ArraySegment<byte>(resp, 0, resp.Length),
+                WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+        
+        
+        public static void SendResponse<T, U>(WebSocket webSocket, T response)
+            where T : ServerResponse<U>
             where U : CommandDto
         {
             byte[] responseBytes = response.ToByte();
-            await webSocket.SendAsync(new ArraySegment<byte>(responseBytes, 0, responseBytes.Length),
-                WebSocketMessageType.Text, true, CancellationToken.None);
+            SendByte(webSocket, responseBytes);
         }
+
+
+        public static void SendSuccess(WebSocket webSocket)
+        {
+            byte[] responseBytes = ServerSimpleResponse.SuccessNoData().ToByte();
+            SendByte(webSocket, responseBytes);
+        }
+
+
+        public static void SendError(WebSocket webSocket, string errorMessage)
+        {
+            var errorResp = new ServerSimpleResponse<InfoDto>(
+                "error",
+                new InfoDto(errorMessage)
+            );
+            SendByte(webSocket, errorResp.ToByte());
+        }
+
         //
         // public static string ReceiveMsg(Stream s)
         // {

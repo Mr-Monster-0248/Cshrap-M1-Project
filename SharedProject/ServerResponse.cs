@@ -40,7 +40,7 @@ namespace SharedProject
 
         public static ServerSimpleResponse<InfoDto> SuccessNoData()
         {
-            return new ServerSimpleResponse<InfoDto>(new InfoDto {Message = ""});
+            return new ServerSimpleResponse<InfoDto>(null);
         }
 
         public override byte[] ToByte()

@@ -26,8 +26,7 @@ namespace ProjectServer.Handlers
 
             if (topicList == null)
             {
-                var resp = new ServerSimpleResponse<InfoDto>("error", new InfoDto{ Message = "Error while fetching data" });
-                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, resp);
+                Communication.SendError(_webSocket, "Error while fetching data");
                 return;
             }
 

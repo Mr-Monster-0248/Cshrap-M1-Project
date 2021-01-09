@@ -17,9 +17,7 @@ namespace ProjectServer.Handlers
 
             if (dbUser == null)
             {
-                var resp = new ServerSimpleResponse<InfoDto>("error", new InfoDto{ Message = "Wrong username or password" });
-                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, resp);
-                // TODO: send response here
+                Communication.SendError(_webSocket, "Wrong username or password");
                 return;
             }
             
@@ -29,7 +27,7 @@ namespace ProjectServer.Handlers
             // Add the user to the Dictionary
             _connectedClient.TryAdd(_user, _webSocket); //TODO: handle error
             Log.Information($"{_user.Username} logged in");
-            Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, ServerSimpleResponse.SuccessNoData());
+            Communication.SendSuccess(_webSocket);
         }
 
         private void HandleRegister(LoginDto dto)
@@ -47,11 +45,9 @@ namespace ProjectServer.Handlers
                 Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, ServerSimpleResponse.SuccessNoData());
             }
             catch
-            {                
-                var resp = new ServerSimpleResponse<InfoDto>("error", new InfoDto{ Message = "Error while registering user" });
-
+            {
                 Log.Error("A registration failed");
-                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, resp);
+                Communication.SendError(_webSocket, "Error while registering user");
             }
         }
     }

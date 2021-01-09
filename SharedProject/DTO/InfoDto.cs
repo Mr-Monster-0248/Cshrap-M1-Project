@@ -6,5 +6,10 @@ namespace SharedProject.DTO
     public class InfoDto : CommandDto
     {
         public string Message { get; set; }
+
+        public InfoDto(string message)
+        {
+            Message = message;
+        }
     }
 }
