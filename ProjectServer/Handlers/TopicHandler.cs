@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Text.Json;
 using ProjectServer.Models;
 using ProjectServer.Services;
+using Serilog;
 using SharedProject;
 using SharedProject.DTO;
 
 namespace ProjectServer.Handlers
 {
-    internal partial class WebSocketHandler  
+    internal partial class WebSocketHandler
     {
-        private void HandleCreateTopic()
+        private void HandleCreateTopic(TopicDto newTopic)
         {
-            throw new NotImplementedException();
+            var topic = new Topic {Title = newTopic.Title, Description = newTopic.Description};
+            if (TopicService.AddTopic(topic))
+            {
+                Log.Information($"Topic {topic.Title} created");
+                Communication.SendSuccess(_webSocket);
+            }
+            else
+            {
+                Communication.SendError(_webSocket, "Wrong username or password");
+            }
         }
 
         private void HandleJoinTopic()
