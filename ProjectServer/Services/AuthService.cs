@@ -37,6 +37,12 @@ namespace ProjectServer.Services
         }
 
 
+        public static bool IsLoggedIn(User user)
+        {
+            return user != null;
+        }
+
+
         public static string HashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password);
