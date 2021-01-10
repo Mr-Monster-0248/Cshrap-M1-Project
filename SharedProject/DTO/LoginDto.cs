@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SharedProject.DTO
+﻿namespace SharedProject.DTO
 {
     public class LoginDto : CommandDto
     {

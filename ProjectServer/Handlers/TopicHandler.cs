@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using ProjectServer.Models;
+﻿using ProjectServer.Models;
 using ProjectServer.Services;
 using Serilog;
 using SharedProject;
@@ -63,7 +60,7 @@ namespace ProjectServer.Handlers
                 Title = topic.Title,
                 Description = topic.Description
             });
-            
+
             Communication.SendListResponse(_webSocket, topicListResponse);
         }
     }

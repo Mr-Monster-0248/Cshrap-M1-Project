@@ -16,11 +16,9 @@ namespace ProjectServer.Models
 
         [Column(TypeName = "timestamp with time zone")]
         public DateTimeOffset CreatedAt { get; set; }
-
-        [Required]
+        
         public string Text { get; set; }
-
-        [Required]
+        
         public int UserId { get; set; }
 
         [Required]

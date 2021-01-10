@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using SharedProject.DTO;
 
@@ -17,8 +16,6 @@ namespace SharedProject
     [Serializable]
     public class ServerSimpleResponse<T> : ServerResponse<T> where T : CommandDto
     {
-        public T Data { get; set; }
-
         public ServerSimpleResponse()
         {
             Status = null;
@@ -36,6 +33,8 @@ namespace SharedProject
             Status = status;
             Data = data;
         }
+
+        public T Data { get; set; }
 
 
         public static ServerSimpleResponse<InfoDto> SuccessNoData()
@@ -56,8 +55,6 @@ namespace SharedProject
     [Serializable]
     public class ServerListResponse<T> : ServerResponse<T> where T : CommandDto
     {
-        public List<T> Data { get; set; }
-
         public ServerListResponse()
         {
             Status = null;
@@ -75,7 +72,9 @@ namespace SharedProject
             Status = status;
             Data = data;
         }
-        
+
+        public List<T> Data { get; set; }
+
         public override byte[] ToByte()
         {
             return JsonSerializer.SerializeToUtf8Bytes(this);

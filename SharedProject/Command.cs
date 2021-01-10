@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Text;
 using System.Text.Json;
-using SharedProject.DTO;
 using SharedProject.CommandUtils;
+using SharedProject.DTO;
 using SharedProject.Exceptions;
 
 namespace SharedProject
 {
     public class Command
     {
+        public Command(string message)
+        {
+            try
+            {
+                message = Parser.Sanitize(message);
+                Prefix = Parser.GetPrefix(message);
+                Data = Parser.GetData(message);
+            }
+            catch (BadRequestException e)
+            {
+                Type = CommandString.Error;
+                Data = $"{{\"message\": \"{e.Message}\"}}";
+            }
+        }
+
         public string Prefix
         {
             get
@@ -22,7 +37,7 @@ namespace SharedProject
                     CommandString.DirectMessage => CommandString.DirectMessage.ToString().ToLower(),
                     CommandString.List => CommandString.List.ToString().ToLower(),
                     CommandString.CreateTopic => CommandString.CreateTopic.ToString().ToLower(),
-                    _ => "error",
+                    _ => "error"
                 };
             }
 
@@ -42,23 +57,8 @@ namespace SharedProject
 
         public CommandString Type { get; private set; }
 
-        public string Data { get; private set; }
+        public string Data { get; }
 
-        public Command(string message)
-        {
-            try
-            {
-                message = Parser.Sanitize(message);
-                Prefix = Parser.GetPrefix(message);
-                Data = Parser.GetData(message);
-            }
-            catch (BadRequestException e)
-            {
-                Type = CommandString.Error;
-                Data = $"{{\"message\": \"{e.Message}\"}}";
-            }
-        }
-        
         public T GetDeserializedData<T>() where T : CommandDto
         {
             return JsonSerializer.Deserialize<T>(Data);

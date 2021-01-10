@@ -1,13 +1,16 @@
-﻿using System.ComponentModel;
-using Npgsql;
-using ProjectServer.Models;
+﻿using ProjectServer.Models;
 
 namespace ProjectServer.Services
 {
     public class DbServices
     {
-        private static DbServices _instance = null;
+        private static DbServices _instance;
         private static readonly object instanceLock = new object();
+
+        public DbServices()
+        {
+            Context = new ServerDbContext();
+        }
 
         public static DbServices Instance
         {
@@ -19,22 +22,14 @@ namespace ProjectServer.Services
                     _instance = new DbServices();
                     return _instance;
                 }
-                
             }
-
         }
 
         public ServerDbContext Context { get; }
-        
-        public DbServices()
-        {
-            Context = new ServerDbContext();
-        }
 
         public static void Init()
         {
             _instance = new DbServices();
         }
-        
     }
 }
