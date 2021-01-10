@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace ProjectServer.Models
 {
     [Table("DirectMessage")]
-    public partial class DirectMessage
+    public class DirectMessage
     {
-        [Key]
-        public int DirectMessageId { get; set; }
+        [Key] public int DirectMessageId { get; set; }
 
-        [Required]
-        public string Text { get; set; }
+        [Required] public string Text { get; set; }
 
         [Column(TypeName = "time with time zone")]
         public DateTimeOffset CreatedAt { get; set; }

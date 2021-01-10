@@ -20,7 +20,7 @@ namespace ProjectServer.Handlers
             }
 
             var receiver = AuthService.GetUserFromUsername(directMessageDto.Receiver);
-            var directMessage = new DirectMessage()
+            var directMessage = new DirectMessage
             {
                 CreatedAt = DateTimeOffset.Now,
                 Sender = _user.UserId,
@@ -49,7 +49,7 @@ namespace ProjectServer.Handlers
             if (!AuthService.IsLoggedIn(_user))
             {
                 Communication.SendError(_webSocket, "You must be logged in to send direct message");
-                Log.Warning($"Not logged in user tried to send topic message");
+                Log.Warning("Not logged in user tried to send topic message");
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace ProjectServer.Handlers
                 {
                     Communication.SendError(_webSocket,
                         $"Could not save message to topic {topicMessageDto.TopicTitle}");
-                    Log.Error($"Error while saving topic message");
+                    Log.Error("Error while saving topic message");
                 }
             }
             else

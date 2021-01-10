@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Net.WebSockets;
+﻿using System.Linq;
 using ProjectServer.Models;
 
 namespace ProjectServer.Services
@@ -13,13 +10,13 @@ namespace ProjectServer.Services
             var context = DbServices.Instance.Context;
             return context.Users.FirstOrDefault(u => u.UserId == userId);
         }
-        
+
         public static User GetUserFromUsername(string username)
         {
             var context = DbServices.Instance.Context;
             return context.Users.FirstOrDefault(u => u.Username == username);
         }
-        
+
         public static User LogUserIn(string username, string password)
         {
             var dbContext = DbServices.Instance.Context;
@@ -33,11 +30,11 @@ namespace ProjectServer.Services
         public static User RegisterUser(User newUser)
         {
             var dbContext = DbServices.Instance.Context;
-            
+
             //TODO: check if username is taken before adding it
 
             if (IsLoggedIn(newUser)) return null;
-            
+
             try
             {
                 dbContext.Users.Add(newUser); // TODO: handle error
@@ -48,7 +45,6 @@ namespace ProjectServer.Services
             {
                 return null;
             }
-
         }
 
 

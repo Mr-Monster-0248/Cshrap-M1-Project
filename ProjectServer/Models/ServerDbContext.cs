@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace ProjectServer.Models
 {
-    public partial class ServerDbContext : DbContext
+    public class ServerDbContext : DbContext
     {
         public ServerDbContext()
         {
@@ -26,9 +25,7 @@ namespace ProjectServer.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {
                 optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=adm;Password=adm");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +34,7 @@ namespace ProjectServer.Models
 
             modelBuilder.Entity<Connect>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.TopicsId })
+                entity.HasKey(e => new {e.UserId, e.TopicsId})
                     .HasName("PK_connect");
 
                 entity.HasOne(d => d.Topics)
@@ -92,6 +89,9 @@ namespace ProjectServer.Models
             OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        private void OnModelCreatingPartial(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace ProjectServer.Models
 {
-    public partial class Topic
+    public class Topic
     {
         public Topic()
         {
@@ -16,12 +14,9 @@ namespace ProjectServer.Models
             TopicMessages = new HashSet<TopicMessage>();
         }
 
-        [Key]
-        public int TopicsId { get; set; }
+        [Key] public int TopicsId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Title { get; set; }
+        [Required] [StringLength(50)] public string Title { get; set; }
 
         public string Description { get; set; }
 

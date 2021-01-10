@@ -1,26 +1,24 @@
-﻿using System;
-using ProjectServer.Models;
+﻿using ProjectServer.Models;
 using ProjectServer.Services;
 using Serilog;
-using SharedProject.DTO;
 using SharedProject;
+using SharedProject.DTO;
 
 namespace ProjectServer.Handlers
 {
-    internal partial class WebSocketHandler    
+    internal partial class WebSocketHandler
     {
-        private void HandleLogin (LoginDto dto)
+        private void HandleLogin(LoginDto dto)
         {
             var dbUser = AuthService.LogUserIn(dto.Username, dto.Password);
-            
-            
+
 
             if (dbUser == null)
             {
                 Communication.SendError(_webSocket, "Wrong username or password");
                 return;
             }
-            
+
             // Set the state of the user
             _user = dbUser;
 
@@ -45,7 +43,7 @@ namespace ProjectServer.Handlers
                 // Logging in the user after registration
                 _user = user;
                 _connectedClient.TryAdd(_user, _webSocket);
-                
+
                 Log.Information($"{_user.Username} registered and logged in");
                 Communication.SendSuccess(_webSocket);
             }

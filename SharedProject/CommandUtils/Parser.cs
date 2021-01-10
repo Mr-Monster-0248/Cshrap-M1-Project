@@ -1,6 +1,5 @@
-﻿using System;
+﻿using SharedProject.Exceptions;
 using SharedProject.Utils;
-using SharedProject.Exceptions;
 
 namespace SharedProject.CommandUtils
 {
@@ -17,12 +16,11 @@ namespace SharedProject.CommandUtils
         {
             return message.Split(':')[0];
         }
-        
+
         public static string GetData(string message)
         {
             var index = message.IndexOf(':');
             return message[(index + 1)..];
-
         }
     }
 }

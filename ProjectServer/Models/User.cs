@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace ProjectServer.Models
 {
     [Table("User")]
-    public partial class User
+    public class User
     {
         public User()
         {
@@ -19,16 +17,11 @@ namespace ProjectServer.Models
             TopicMessages = new HashSet<TopicMessage>();
         }
 
-        [Key]
-        public int UserId { get; set; }
+        [Key] public int UserId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Username { get; set; }
+        [Required] [StringLength(50)] public string Username { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string Password { get; set; }
+        [Required] [StringLength(100)] public string Password { get; set; }
 
         [InverseProperty(nameof(Connect.User))]
         public virtual ICollection<Connect> Connects { get; set; }

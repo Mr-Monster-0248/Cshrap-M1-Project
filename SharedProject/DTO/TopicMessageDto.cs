@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace SharedProject.DTO
+﻿namespace SharedProject.DTO
 {
-    public class TopicMessageDto: CommandDto
+    public class TopicMessageDto : CommandDto
     {
         public string TopicTitle { get; set; }
         public string Text { get; set; }

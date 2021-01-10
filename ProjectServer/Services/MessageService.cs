@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.WebSockets;
 using ProjectServer.Models;
 using Serilog;
@@ -39,10 +38,10 @@ namespace ProjectServer.Services
                 Receiver = receiver.Username,
                 Text = directMessage.Text
             };
-            
+
             Communication.SendResponse(receiverWebsocket, message);
         }
-        
+
         public static TopicMessage SaveTopicMessage(TopicMessage newTopicMessage)
         {
             var context = DbServices.Instance.Context;
@@ -61,17 +60,17 @@ namespace ProjectServer.Services
                 return null;
             }
         }
-        
+
         public static void SendTopicMessage(TopicMessage topicMessage, WebSocket receiverWebsocket)
         {
-            var message = new TopicMessageDto()
+            var message = new TopicMessageDto
             {
                 TopicTitle = topicMessage.Topics.Title,
                 Sender = topicMessage.User.Username,
                 Text = topicMessage.Text,
                 CreatedAt = topicMessage.CreatedAt.ToLocalTime().ToString()
             };
-            
+
             Communication.SendResponse(receiverWebsocket, message);
         }
     }

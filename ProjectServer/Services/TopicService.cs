@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ProjectServer.Models;
 using Serilog;
@@ -9,14 +8,13 @@ namespace ProjectServer.Services
     public class TopicService
     {
         /// <summary>
-        /// Get all the topics available
+        ///     Get all the topics available
         /// </summary>
         /// <returns>A list of Topic object</returns>
         public static List<Topic> GetTopics()
         {
             var context = DbServices.Instance.Context;
             return context.Topics.ToList();
-            
         }
 
         public static Topic GetTopics(string name)
@@ -36,12 +34,12 @@ namespace ProjectServer.Services
         {
             var context = DbServices.Instance.Context;
 
-            return (from t in context.Topics 
-                    join c in context.Connects 
-                        on t.TopicsId equals c.TopicsId 
-                    where c.UserId == userId 
+            return (from t in context.Topics
+                    join c in context.Connects
+                        on t.TopicsId equals c.TopicsId
+                    where c.UserId == userId
                     select t
-                    ).ToList();
+                ).ToList();
         }
 
         public static bool AddTopic(Topic newTopic)
@@ -69,10 +67,10 @@ namespace ProjectServer.Services
                 Log.Error($"The topic {topicName} do not exist and can not be joined");
                 return false;
             }
-            
+
             var context = DbServices.Instance.Context;
-                
-            var newConnection = new Connect()
+
+            var newConnection = new Connect
             {
                 UserId = userId,
                 TopicsId = topicToJoin.TopicsId
@@ -86,10 +84,10 @@ namespace ProjectServer.Services
         {
             var context = DbServices.Instance.Context;
 
-            return (from u in context.Users 
-                    join c in context.Connects 
-                        on u.UserId equals c.UserId 
-                    where c.TopicsId == topic.TopicsId 
+            return (from u in context.Users
+                    join c in context.Connects
+                        on u.UserId equals c.UserId
+                    where c.TopicsId == topic.TopicsId
                     select u
                 ).ToList();
         }

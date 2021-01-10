@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.WebSockets;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using SharedProject.DTO;
 
@@ -17,13 +13,13 @@ namespace SharedProject
             await webSocket.SendAsync(new ArraySegment<byte>(resp, 0, resp.Length),
                 WebSocketMessageType.Text, true, CancellationToken.None);
         }
-        
-        
+
+
         public static void SendResponse<T>(WebSocket webSocket, T commandData)
             where T : CommandDto
         {
             var response = new ServerSimpleResponse<T>(commandData);
-            byte[] responseBytes = response.ToByte();
+            var responseBytes = response.ToByte();
             SendByte(webSocket, responseBytes);
         }
 
@@ -31,14 +27,14 @@ namespace SharedProject
             where T : CommandDto
         {
             var response = new ServerListResponse<T>(commandData);
-            byte[] responseBytes = response.ToByte();
+            var responseBytes = response.ToByte();
             SendByte(webSocket, responseBytes);
         }
 
 
         public static void SendSuccess(WebSocket webSocket)
         {
-            byte[] responseBytes = ServerSimpleResponse.SuccessNoData().ToByte();
+            var responseBytes = ServerSimpleResponse.SuccessNoData().ToByte();
             SendByte(webSocket, responseBytes);
         }
 

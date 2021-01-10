@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.ComponentModel;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using ProjectServer.Models;
-using SharedProject.Utils;
-using SharedProject;
 using Serilog;
-using SharedProject.DTO;
+using SharedProject;
 using SharedProject.CommandUtils;
+using SharedProject.DTO;
+using SharedProject.Utils;
 
 namespace ProjectServer.Handlers
 {
     /// <summary>
-    /// Class that handle the websocket connection thru multiple handler functions
+    ///     Class that handle the websocket connection thru multiple handler functions
     /// </summary>
     internal partial class WebSocketHandler
     {
-        private static readonly ConcurrentDictionary<User, WebSocket> _connectedClient = new ConcurrentDictionary<User, WebSocket>();
-        private User _user;
+        private static readonly ConcurrentDictionary<User, WebSocket> _connectedClient =
+            new ConcurrentDictionary<User, WebSocket>();
+
         private readonly WebSocket _webSocket;
+        private User _user;
 
         public WebSocketHandler(WebSocketContext webSocketContext)
         {
@@ -33,11 +33,11 @@ namespace ProjectServer.Handlers
         {
             try
             {
-                byte[] receiveBuffer = new byte[Constants.MaxByte];
+                var receiveBuffer = new byte[Constants.MaxByte];
 
                 while (_webSocket.State == WebSocketState.Open)
                 {
-                    WebSocketReceiveResult receiveResult =
+                    var receiveResult =
                         await _webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
 
                     switch (receiveResult.MessageType)
@@ -46,14 +46,17 @@ namespace ProjectServer.Handlers
                             await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
                             break;
                         case WebSocketMessageType.Binary:
-                            await _webSocket.CloseAsync(WebSocketCloseStatus.InvalidMessageType, "Cannot accept binary frame",
+                            await _webSocket.CloseAsync(WebSocketCloseStatus.InvalidMessageType,
+                                "Cannot accept binary frame",
                                 CancellationToken.None);
                             break;
                         default:
                         {
-                            var message = Encoding.Default.GetString(receiveBuffer).Replace("\0", String.Empty); // receiveBuffer.ToString();
+                            var message =
+                                Encoding.Default.GetString(receiveBuffer)
+                                    .Replace("\0", string.Empty); // receiveBuffer.ToString();
 
-                            Command command = new Command(message);
+                            var command = new Command(message);
 
                             Log.Information($"Received {command.Type} request");
 
@@ -70,13 +73,13 @@ namespace ProjectServer.Handlers
             }
             finally
             {
-                Log.Information($"One connection ended");
+                Log.Information("One connection ended");
                 _webSocket.Dispose();
             }
         }
 
         /// <summary>
-        /// Dispatcher function that act like a router for all the features
+        ///     Dispatcher function that act like a router for all the features
         /// </summary>
         /// <param name="command">The command sent by the user via websocket</param>
         /// <exception cref="NotImplementedException"></exception>
