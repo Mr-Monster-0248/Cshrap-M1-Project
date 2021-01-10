@@ -81,5 +81,17 @@ namespace ProjectServer.Services
             context.SaveChanges();
             return true;
         }
+
+        public static List<User> GetUserForTopic(Topic topic)
+        {
+            var context = DbServices.Instance.Context;
+
+            return (from u in context.Users 
+                    join c in context.Connects 
+                        on u.UserId equals c.UserId 
+                    where c.TopicsId == topic.TopicsId 
+                    select u
+                ).ToList();
+        }
     }
 }
