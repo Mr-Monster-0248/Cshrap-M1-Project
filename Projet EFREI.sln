@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetClient", "ProjetEfrei
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectServer", "ProjectServer\ProjectServer.csproj", "{9346A6AA-FCBA-4938-9A18-DE40B2666A70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{868CEC6C-CC3D-4667-ABB5-5A3759781298}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject", "SharedProject\SharedProject.shproj", "{1AE627EA-3D32-4CDD-86F8-467BE328A617}"
 EndProject
 Global
@@ -76,26 +74,6 @@ Global
 		{9346A6AA-FCBA-4938-9A18-DE40B2666A70}.Release|x64.Build.0 = Release|Any CPU
 		{9346A6AA-FCBA-4938-9A18-DE40B2666A70}.Release|x86.ActiveCfg = Release|Any CPU
 		{9346A6AA-FCBA-4938-9A18-DE40B2666A70}.Release|x86.Build.0 = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|ARM.Build.0 = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|x64.Build.0 = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Debug|x86.Build.0 = Debug|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|Any CPU.Build.0 = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|ARM.ActiveCfg = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|ARM.Build.0 = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|ARM64.Build.0 = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|x64.ActiveCfg = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|x64.Build.0 = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|x86.ActiveCfg = Release|Any CPU
-		{868CEC6C-CC3D-4667-ABB5-5A3759781298}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
