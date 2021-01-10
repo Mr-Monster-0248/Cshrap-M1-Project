@@ -99,6 +99,7 @@ namespace ProjectServer.Handlers
                     HandleCreateTopic(command.GetDeserializedData<TopicDto>());
                     break;
                 case CommandString.Join:
+                    HandleJoinTopic(command.GetDeserializedData<TopicDto>());
                     break;
                 case CommandString.Error:
                     break;

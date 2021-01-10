@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using ProjectServer.Models;
-using SharedProject;
-using SharedProject.DTO;
+using Serilog;
 
 namespace ProjectServer.Services
 {
@@ -22,10 +19,17 @@ namespace ProjectServer.Services
             
         }
 
-        public static List<Topic> GetTopics(string name)
+        public static Topic GetTopics(string name)
         {
             var context = DbServices.Instance.Context;
-            return context.Topics.Where(topic => topic.Title.Contains(name)).ToList();
+            try
+            {
+                return context.Topics.Where(topic => topic.Title.Contains(name)).ToList()[0];
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static List<Topic> GetConnectedTopics(int userId)
@@ -54,6 +58,28 @@ namespace ProjectServer.Services
             {
                 return false;
             }
+        }
+
+        public static bool JoinTopic(string topicName, int userId)
+        {
+            var topicToJoin = GetTopics(topicName);
+
+            if (topicToJoin == null)
+            {
+                Log.Error($"The topic {topicName} do not exist and can not be joined");
+                return false;
+            }
+            
+            var context = DbServices.Instance.Context;
+                
+            var newConnection = new Connect()
+            {
+                UserId = userId,
+                TopicsId = topicToJoin.TopicsId
+            };
+            context.Connects.Add(newConnection);
+            context.SaveChanges();
+            return true;
         }
     }
 }

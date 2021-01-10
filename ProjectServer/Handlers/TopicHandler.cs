@@ -25,9 +25,26 @@ namespace ProjectServer.Handlers
             }
         }
 
-        private void HandleJoinTopic()
+        private void HandleJoinTopic(TopicDto topic)
         {
-            throw new NotImplementedException();
+            if (!AuthService.IsLoggedIn(_user))
+            {
+                Communication.SendError(_webSocket, "You must be logged in to join topic");
+                Log.Warning($"Not logged in user tried to join topic {topic.Title}");
+                return;
+            }
+
+
+            if (TopicService.JoinTopic(topic.Title, _user.UserId))
+            {
+                Log.Information($"User {_user.Username} joined topic {topic.Title}");
+                Communication.SendSuccess(_webSocket);
+            }
+            else
+            {
+                Log.Information($"User {_user.Username} could not join topic {topic.Title}");
+                Communication.SendError(_webSocket, $"Could not join topic {topic.Title}");
+            }
         }
 
         private void HandleListTopic()
