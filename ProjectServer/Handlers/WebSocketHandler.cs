@@ -14,6 +14,9 @@ using SharedProject.CommandUtils;
 
 namespace ProjectServer.Handlers
 {
+    /// <summary>
+    /// Class that handle the websocket connection thru multiple handler functions
+    /// </summary>
     internal partial class WebSocketHandler
     {
         private static readonly ConcurrentDictionary<User, WebSocket> _connectedClient = new ConcurrentDictionary<User, WebSocket>();
@@ -72,6 +75,11 @@ namespace ProjectServer.Handlers
             }
         }
 
+        /// <summary>
+        /// Dispatcher function that act like a router for all the features
+        /// </summary>
+        /// <param name="command">The command sent by the user via websocket</param>
+        /// <exception cref="NotImplementedException"></exception>
         private void Dispatch(Command command)
         {
             switch (command.Type)
