@@ -57,18 +57,14 @@ namespace ProjectServer.Handlers
                 return;
             }
 
-            var topicListResponse = topicList.ConvertAll(topic =>
+            var topicListResponse = topicList.ConvertAll(topic => new TopicDto
             {
-                return new TopicDto
-                {
-                    Id = topic.TopicsId,
-                    Title = topic.Title,
-                    Description = topic.Description
-                };
+                Id = topic.TopicsId,
+                Title = topic.Title,
+                Description = topic.Description
             });
-
-            var respSuccess = new ServerListResponse<TopicDto>(topicListResponse);
-            Communication.SendResponse<ServerListResponse<TopicDto>, TopicDto>(_webSocket, respSuccess);
+            
+            Communication.SendListResponse(_webSocket, topicListResponse);
         }
     }
 }

@@ -1,16 +1,29 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
 using ProjectServer.Models;
 
 namespace ProjectServer.Services
 {
     public class AuthService
     {
+        public static User GetUserFromId(int userId)
+        {
+            var context = DbServices.Instance.Context;
+            return context.Users.FirstOrDefault(u => u.UserId == userId);
+        }
+        
+        public static User GetUserFromUsername(string username)
+        {
+            var context = DbServices.Instance.Context;
+            return context.Users.FirstOrDefault(u => u.Username == username);
+        }
+        
         public static User LogUserIn(string username, string password)
         {
             var dbContext = DbServices.Instance.Context;
-            var dbUser = dbContext.Users.FirstOrDefault(user => user.Username == username);
+            var dbUser = GetUserFromUsername(username);
 
             if (dbUser == null) return null;
 
@@ -22,12 +35,14 @@ namespace ProjectServer.Services
             var dbContext = DbServices.Instance.Context;
             
             //TODO: check if username is taken before adding it
+
+            if (IsLoggedIn(newUser)) return null;
             
             try
             {
                 dbContext.Users.Add(newUser); // TODO: handle error
                 dbContext.SaveChanges();
-                return dbContext.Users.FirstOrDefault(user => user.Username == newUser.Username);
+                return GetUserFromUsername(newUser.Username);
             }
             catch
             {

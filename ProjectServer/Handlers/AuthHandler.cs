@@ -47,7 +47,7 @@ namespace ProjectServer.Handlers
                 _connectedClient.TryAdd(_user, _webSocket);
                 
                 Log.Information($"{_user.Username} registered and logged in");
-                Communication.SendResponse<ServerSimpleResponse<InfoDto>, InfoDto>(_webSocket, ServerSimpleResponse.SuccessNoData());
+                Communication.SendSuccess(_webSocket);
             }
             catch
             {

@@ -19,10 +19,18 @@ namespace SharedProject
         }
         
         
-        public static void SendResponse<T, U>(WebSocket webSocket, T response)
-            where T : ServerResponse<U>
-            where U : CommandDto
+        public static void SendResponse<T>(WebSocket webSocket, T commandData)
+            where T : CommandDto
         {
+            var response = new ServerSimpleResponse<T>(commandData);
+            byte[] responseBytes = response.ToByte();
+            SendByte(webSocket, responseBytes);
+        }
+
+        public static void SendListResponse<T>(WebSocket webSocket, List<T> commandData)
+            where T : CommandDto
+        {
+            var response = new ServerListResponse<T>(commandData);
             byte[] responseBytes = response.ToByte();
             SendByte(webSocket, responseBytes);
         }
