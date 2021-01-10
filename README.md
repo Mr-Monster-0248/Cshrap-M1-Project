@@ -1,4 +1,4 @@
-# Cshrap-M2-Project
+# Cshrap-M1-Project
 4th year project of C# at EFREI
 
 ## Development
